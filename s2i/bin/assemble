@@ -1,0 +1,35 @@
+#!/bin/sh
+
+echo "---> Installing Thermostat Web Client source ..."
+mv /tmp/src/* ./
+mv /tmp/src/.{babelrc,eslintignore,eslintrc.yaml,eslintrc.test.yaml,htmlhintrc} ./
+
+# "development" environment is intended to mean "on a developer's machine",
+# and we use "testing" environment for ex. continuous deployment
+if [ -z "$NODE_ENV" ]; then
+    export NODE_ENV=testing
+fi
+
+echo "NODE_ENV=$NODE_ENV"
+echo "GATEWAY_URL=$GATEWAY_URL"
+
+if [ -z "$GATEWAY_URL" ]; then
+    echo "GATEWAY_URL must be set"
+    exit 1
+fi
+
+echo "---> Building Thermostat Web Client ..."
+NODE_ENV=development npm install
+npm run build
+npm prune --production
+
+web_client_dir="${THERMOSTAT_GATEWAY_HOME}/web-client"
+echo "---> Installing Thermostat Web Client in "${web_client_dir}" ..."
+mkdir -p "${web_client_dir}"
+cp -r dist/* "${web_client_dir}"
+
+echo "---> Cleaning up sources ..."
+rm -rf ./*
+
+fix-permissions "${THERMOSTAT_GATEWAY_HOME}"
+exit 0

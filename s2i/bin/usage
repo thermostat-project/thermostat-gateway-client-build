@@ -1,0 +1,10 @@
+#!/bin/bash
+# inform the user how to use the image
+cat <<EOF
+This is a S2I sample builder image, to use it, install
+https://github.com/openshift/source-to-image
+
+Example invocation:
+$ s2i build http://icedtea.classpath.org/mirror/git/thermostat-ng-web-gateway icedtea/thermostat-web-gateway-client-builder icedtea/thermostat-web-gateway
+$ s2i build --scripts-url=image:///usr/libexec/s2i/webclient -e GATEWAY_URL="https://example.com:30000" http://icedtea.classpath.org/mirror/git/thermostat-ng-web-client icedtea/thermostat-web-gateway icedtea/thermostat-web-gateway-client
+EOF
