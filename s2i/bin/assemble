@@ -24,13 +24,29 @@ fi
 
 echo "---> Building Thermostat Web Client ..."
 NODE_ENV=development ${NPM_CMD} install
+if [ $? -ne 0 ]; then
+    echo "npm install failed" >&2
+    exit 1
+fi
 ${NPM_CMD} run build
+if [ $? -ne 0 ]; then
+    echo "npm run build failed" >&2
+    exit 1
+fi
 ${NPM_CMD} prune --production
+if [ $? -ne 0 ]; then
+    echo "npm prune failed" >&2
+    exit 1
+fi
 
 web_client_dir="${THERMOSTAT_GATEWAY_HOME}/web-client"
 echo "---> Installing Thermostat Web Client in "${web_client_dir}" ..."
 mkdir -p "${web_client_dir}"
 cp -r dist/* "${web_client_dir}"
+if [ $? -ne 0 ]; then
+    echo "Failed to install web client" >&2
+    exit 1
+fi
 
 echo "---> Cleaning up sources ..."
 rm -rf ./*
