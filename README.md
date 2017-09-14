@@ -8,12 +8,14 @@ call this image `icedtea/thermostat-web-gateway-client`.
 Environment variables
 ---------------------------------
 
-The following variables must be specified when building the web client by passing `-e VAR=VALUE` 
+The following variables can be specified when building the web client by passing `-e VAR=VALUE` 
 to your `s2i build` command:
 
 |    Variable name              |    Description                              |
 | :---------------------------- | -----------------------------------------   |
-|  `GATEWAY_URL`                | URL used by the web client to connect to the web gateway |
+|  `GATEWAY_URL`                | URL used by the web client to connect to the web gateway (required) |
+|  `NODE_ENV`                   | Specifies type of environment to build/run the web client. See web client [README](http://icedtea.classpath.org/hg/thermostat-ng/web-client/file/tip/README.md) for details |
+|  `NPM_CMD`                    | Override the command used to invoke `npm` (default value: "/opt/rh/rh-nodejs6/root/usr/bin/npm") |
 
 The icedtea/thermostat-web-gateway-client image recognizes the following environment
 variables that you can set during initialization by passing `-e VAR=VALUE` to

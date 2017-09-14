@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Run using web gateway script
 . "${STI_SCRIPTS_PATH}/run"
