@@ -10,10 +10,6 @@ if [ -z "${NODE_ENV}" ]; then
     export NODE_ENV=testing
 fi
 
-if [ -z "${NPM_CMD}" ]; then
-    NPM_CMD="/opt/rh/rh-nodejs6/root/usr/bin/npm"
-fi
-
 echo "NODE_ENV=${NODE_ENV}"
 echo "GATEWAY_URL=${GATEWAY_URL}"
 
@@ -23,17 +19,18 @@ if [ -z "${GATEWAY_URL}" ]; then
 fi
 
 echo "---> Building Thermostat Web Client ..."
-NODE_ENV=development ${NPM_CMD} install
+NODE_ENV=development node ${NODE_ARGS} $(which npm-install-que)
 if [ $? -ne 0 ]; then
     echo "npm install failed" >&2
     exit 1
 fi
-${NPM_CMD} run build
+# Just build webpack bundle, full build can cause container to run out of memory
+node ${NODE_ARGS} ./node_modules/.bin/webpack --bail --progress --profile
 if [ $? -ne 0 ]; then
     echo "npm run build failed" >&2
     exit 1
 fi
-${NPM_CMD} prune --production
+node ${NODE_ARGS} $(which npm) prune --production
 if [ $? -ne 0 ]; then
     echo "npm prune failed" >&2
     exit 1

@@ -15,7 +15,7 @@ to your `s2i build` command:
 | :---------------------------- | -----------------------------------------   |
 |  `GATEWAY_URL`                | URL used by the web client to connect to the web gateway (required) |
 |  `NODE_ENV`                   | Specifies type of environment to build/run the web client. See web client [README](http://icedtea.classpath.org/hg/thermostat-ng/web-client/file/tip/README.md) for details |
-|  `NPM_CMD`                    | Override the command used to invoke `npm` (default value: "/opt/rh/rh-nodejs6/root/usr/bin/npm") |
+|  `NODE_ARGS`                  | Arguments to pass to the Node runtime when building |
 
 The icedtea/thermostat-web-gateway-client image recognizes the following environment
 variables that you can set during initialization by passing `-e VAR=VALUE` to

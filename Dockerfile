@@ -19,10 +19,18 @@ RUN INSTALL_PKGS="rh-nodejs6 rh-nodejs6-npm" && \
 # Add MongoDB collection to those enabled by the base image
 ENV ENABLED_COLLECTIONS="${ENABLED_COLLECTIONS} rh-nodejs6"
 
+# Package to install npm packages one at a time, for low memory containers
+RUN scl enable rh-nodejs6 "npm install -g npm-install-que"
+
 WORKDIR ${HOME}
 
 # Install s2i build scripts
 COPY ./s2i/bin/ ${STI_SCRIPTS_PATH}/webclient
+
+# Ensure any UID can read/write to files in /opt/app-root
+RUN chown -R ${APP_USER}:0 /opt/app-root && \
+    find /opt/app-root -type d -exec chmod g+rwx '{}' \; && \
+    find /opt/app-root -type f -exec chmod g+rw '{}' \;
 
 # User ID of user in base image
 USER 1001
