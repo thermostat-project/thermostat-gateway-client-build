@@ -13,7 +13,6 @@ to your `s2i build` command:
 
 |    Variable name              |    Description                              |
 | :---------------------------- | -----------------------------------------   |
-|  `GATEWAY_URL`                | URL used by the web client to connect to the web gateway (required) |
 |  `NODE_ENV`                   | Specifies type of environment to build/run the web client. See web client [README](http://icedtea.classpath.org/hg/thermostat-ng/web-client/file/tip/README.md) for details |
 |  `NODE_ARGS`                  | Arguments to pass to the Node runtime when building |
 
