@@ -1,4 +1,4 @@
-FROM icedtea/thermostat-web-gateway-builder
+FROM icedtea/thermostat-web-gateway-32bit-builder
 
 # Thermostat Web Gateway + Web Client Builder Image.
 # See README.md for environment variables required at runtime.
