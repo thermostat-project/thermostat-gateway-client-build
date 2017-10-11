@@ -40,7 +40,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "---> Cleaning up sources ..."
-rm -rf ./*
+rm -rf ./* ./.[!.]*
 
 fix-permissions "${THERMOSTAT_GATEWAY_HOME}"
 exit 0
