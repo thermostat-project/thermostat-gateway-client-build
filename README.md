@@ -1,9 +1,10 @@
-Thermostat Web Gateway + Web Client Builder Docker image
+Thermostat Web Gateway + Web Client Builder (32-bit) Docker image
 =============================
 
 This repository contains a Dockerfile for a Thermostat Web Gateway + Web Client Builder image, which in turn
 can be used to build a Thermostat Web Gateway image which also serves the Thermostat Web Client, 
-call this image `icedtea/thermostat-web-gateway-client`.
+call this image `icedtea/thermostat-web-gateway-client-32bit`.
+This image builds and runs using a 32-bit JVM.
 
 Environment variables
 ---------------------------------
@@ -16,7 +17,7 @@ to your `s2i build` command:
 |  `NODE_ENV`                   | Specifies type of environment to build/run the web client. See web client [README](http://icedtea.classpath.org/hg/thermostat-ng/web-client/file/tip/README.md) for details |
 |  `NODE_ARGS`                  | Arguments to pass to the Node runtime when building |
 
-The icedtea/thermostat-web-gateway-client image recognizes the following environment
+The icedtea/thermostat-web-gateway-client-32bit image recognizes the following environment
 variables that you can set during initialization by passing `-e VAR=VALUE` to
 the Docker run command
 
@@ -32,20 +33,20 @@ the Docker run command
 
 Usage
 ---------------------------------
-First, you need to build this image, let's call it `icedtea/thermostat-web-gateway-client-builder`:
+First, you need to build this image, let's call it `icedtea/thermostat-web-gateway-client-32bit-builder`:
 
-    $ docker build -t icedtea/thermostat-web-gateway-client-builder .
+    $ docker build -t icedtea/thermostat-web-gateway-client-32bit-builder .
 
-Next, build a Thermostat Web Gateway version into `icedtea/thermostat-web-gateway` using the builder
+Next, build a Thermostat Web Gateway version into `icedtea/thermostat-web-gateway-32bit` using the builder
 image:
 
-    $ s2i build http://icedtea.classpath.org/mirror/git/thermostat-ng-web-gateway icedtea/thermostat-web-gateway-client-builder icedtea/thermostat-web-gateway
+    $ s2i build http://icedtea.classpath.org/mirror/git/thermostat-ng-web-gateway icedtea/thermostat-web-gateway-client-32bit-builder icedtea/thermostat-web-gateway-32bit
 
 Then, build the Thermostat Web Client and include it as an endpoint in the Web Gateway using the image
 built in the previous step:
 
-    $ s2i build --scripts-url=image:///usr/libexec/s2i/webclient -e GATEWAY_URL="[...]" http://icedtea.classpath.org/mirror/git/thermostat-ng-web-client icedtea/thermostat-web-gateway icedtea/thermostat-web-gateway-client
+    $ s2i build --scripts-url=image:///usr/libexec/s2i/webclient -e GATEWAY_URL="[...]" http://icedtea.classpath.org/mirror/git/thermostat-ng-web-client icedtea/thermostat-web-gateway-32bit icedtea/thermostat-web-gateway-client-32bit
 
 Finally, run the built image while setting the required environment variables:
 
-    $ docker run -e [...] -it icedtea/thermostat-web-gateway-client
+    $ docker run -e [...] -it icedtea/thermostat-web-gateway-client-32bit
