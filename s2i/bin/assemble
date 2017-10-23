@@ -1,6 +1,8 @@
 #!/bin/bash
 
 echo "---> Installing Thermostat Web Client source ..."
+mkdir -p "${THERMOSTAT_BUILD_DIR}"
+pushd "${THERMOSTAT_BUILD_DIR}" >/dev/null
 mv /tmp/src/* ./
 mv /tmp/src/.{babelrc,eslintignore,eslintrc.yaml,eslintrc.test.yaml,htmlhintrc} ./
 
@@ -40,6 +42,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "---> Cleaning up sources ..."
+popd >/dev/null
 rm -rf ./* ./.[!.]*
 
 fix-permissions "${THERMOSTAT_GATEWAY_HOME}"
